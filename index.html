@@ -10,23 +10,29 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #ffccd5;
+            background: linear-gradient(135deg, #ffccd5, #ff8fab);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
         h1 {
-            font-family: 'Bubblegum Sans', cursive;
+            font-family: 'Luckiest Guy', cursive;
             color: #d63384;
             animation: pulse 1.5s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
+        }
+        .no-pulse {
+            animation: none;
         }
         .buttons {
             margin-top: 20px;
@@ -40,6 +46,10 @@
             border-radius: 10px;
             transition: 0.3s;
             position: relative;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            transform: scale(1.1);
         }
         .yes {
             background-color: #ff4d6d;
@@ -54,10 +64,32 @@
             font-size: 48px;
             color: #d63384;
             margin-top: 20px;
-            font-family: 'Bubblegum Sans', cursive;
+            font-family: 'Luckiest Guy', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         .hidden {
             display: none;
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            color: #d63384;
+        }
+        /* Mobile-friendly adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+            #countdown {
+                font-size: 36px;
+            }
+            footer {
+                font-size: 14px;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -71,7 +103,7 @@
     <div id="countdown" class="hidden">
         <span id="timer">3</span>
     </div>
-    <footer style="position: absolute; bottom: 10px; color: #d63384;">
+    <footer>
         Made with ❤️ by Matty D
     </footer>
 
@@ -119,7 +151,7 @@
         function startCelebration() {
             let celebrationSound = document.getElementById("celebrationSound");
             celebrationSound.play();
-            document.body.innerHTML = '<h1>Thank God! also (Cooper\'s Hawk tomorrow night?) 🍷❤️</h1>';
+            document.body.innerHTML = '<h1 class="no-pulse">Thank God! also (Cooper\'s Hawk tomorrow night?) 🍷❤️</h1>';
             setTimeout(launchConfetti, 500);
         }
 
