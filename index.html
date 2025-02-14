@@ -19,6 +19,7 @@
             position: relative;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
         h1 {
             font-family: 'Luckiest Guy', cursive;
@@ -75,6 +76,37 @@
             bottom: 10px;
             color: #d63384;
         }
+        /* Floating hearts */
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 24px;
+            animation: float 10s infinite ease-in;
+            opacity: 0;
+        }
+        .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .heart:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .heart:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .heart:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .heart:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .heart:nth-child(9) { left: 90%; animation-delay: 16s; }
+        .heart:nth-child(10) { left: 100%; animation-delay: 18s; }
         /* Mobile-friendly adjustments */
         @media (max-width: 600px) {
             h1 {
@@ -106,6 +138,20 @@
     <footer>
         Made with ❤️ by Matty D
     </footer>
+
+    <!-- Floating hearts -->
+    <div class="hearts">
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+        <div class="heart">💖</div>
+    </div>
 
     <!-- Audio Elements -->
     <audio id="backgroundMusic" loop autoplay>
@@ -151,7 +197,7 @@
         function startCelebration() {
             let celebrationSound = document.getElementById("celebrationSound");
             celebrationSound.play();
-            document.body.innerHTML = '<h1 class="no-pulse">Thank God! I LOVE YOU! also (Cooper\'s Hawk tomorrow night?) 🍷❤️</h1>';
+            document.body.innerHTML = '<h1 class="no-pulse">Thank God! I Love You! also (Cooper\'s Hawk tomorrow night?) 🍷❤️</h1>';
             setTimeout(launchConfetti, 500);
         }
 
