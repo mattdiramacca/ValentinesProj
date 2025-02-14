@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <link rel="icon" type="image/x-icon" href="https://emojicdn.elk.sh/💖">
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffccd5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        h1 {
+            font-family: 'Bubblegum Sans', cursive;
+            color: #d63384;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+            position: relative;
+        }
+        .yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        .no {
+            background-color: #6c757d;
+            color: white;
+            position: absolute;
+        }
+        #countdown {
+            font-size: 48px;
+            color: #d63384;
+            margin-top: 20px;
+            font-family: 'Bubblegum Sans', cursive;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <h1>Will you be my Valentine? 💖</h1>
+    <div class="buttons">
+        <button class="yes" id="yesButton" aria-label="Yes">Yes</button>
+        <button class="no" id="noButton" aria-label="No">No</button>
+    </div>
+    <div id="countdown" class="hidden">
+        <span id="timer">3</span>
+    </div>
+    <footer style="position: absolute; bottom: 10px; color: #d63384;">
+        Made with ❤️ by Matty D
+    </footer>
+
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="clickSound">
+        <source src="click-sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="celebrationSound">
+        <source src="celebration-sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Try to autoplay background music
+        window.addEventListener("load", function() {
+            let backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.play().catch(() => {
+                console.log("Autoplay blocked. User interaction required.");
+            });
+        });
+
+        // Play click sound when "Yes" is clicked
+        document.getElementById("yesButton").addEventListener("click", function() {
+            let clickSound = document.getElementById("clickSound");
+            clickSound.play();
+            document.querySelector(".buttons").classList.add("hidden");
+            document.getElementById("countdown").classList.remove("hidden");
+            let count = 3;
+            let countdownInterval = setInterval(() => {
+                count--;
+                document.getElementById("timer").innerText = count;
+                if (count === 0) {
+                    clearInterval(countdownInterval);
+                    startCelebration();
+                }
+            }, 1000);
+        });
+
+        // Play celebration sound when countdown ends
+        function startCelebration() {
+            let celebrationSound = document.getElementById("celebrationSound");
+            celebrationSound.play();
+            document.body.innerHTML = '<h1>Awesome! Cooper\'s Hawk tomorrow night? 🍷❤️</h1>';
+            setTimeout(launchConfetti, 500);
+        }
+
+        // Confetti animation
+        function launchConfetti() {
+            if (typeof confetti === "function") {
+                const duration = 5 * 1000; // 5 seconds
+                const end = Date.now() + duration;
+                (function frame() {
+                    confetti({
+                        particleCount: 10,
+                        spread: 90,
+                        origin: { y: 0.6 }
+                    });
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                })();
+            } else {
+                document.body.innerHTML += '<p>🎉 Yay! 🎉</p>';
+            }
+        }
+
+        // Move "No" button on hover
+        document.getElementById("noButton").addEventListener("mouseover", function() {
+            let button = this;
+            let maxX = window.innerWidth - button.offsetWidth;
+            let maxY = window.innerHeight - button.offsetHeight;
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        });
+    </script>
+</body>
+</html>
